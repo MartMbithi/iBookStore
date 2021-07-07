@@ -1,21 +1,47 @@
 <?php
-    session_start();
-    include('config/config.php');
-    include('config/checklogin.php');
-    check_login();
+/*
+ * Created on Wed Jul 07 2021
+ *
+ * The MIT License (MIT)
+ * Copyright (c) 2021 MartDevelopers Inc
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+ * and associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or substantial
+ * portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+ * TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 
-    require_once('partials/_head.php');
+session_start();
+include('config/config.php');
+include('config/checklogin.php');
+check_login();
+
+require_once('partials/_head.php');
 ?>
+
 <body>
-    
+
     <!--  BEGIN NAVBAR  -->
-    <?php require_once('partials/_staffNav.php');?>
+    <?php require_once('partials/_staffNav.php'); ?>
     <!--  END NAVBAR  -->
 
     <!--  BEGIN NAVBAR  -->
     <div class="sub-header-container">
         <header class="header navbar navbar-expand-sm">
-            <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></a>
+            <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg></a>
             <ul class="navbar-nav flex-row">
                 <li>
                     <div class="page-header">
@@ -39,7 +65,7 @@
         <div class="search-overlay"></div>
 
         <!--  BEGIN SIDEBAR  -->
-        <?php require_once('partials/_staffSideNav.php');?>
+        <?php require_once('partials/_staffSideNav.php'); ?>
         <!--  END SIDEBAR  -->
 
         <!--  BEGIN CONTENT AREA  -->
@@ -48,7 +74,7 @@
                 <div class="row layout-top-spacing">
                     <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
                         <div class="widget-content widget-content-area br-6">
-                        <h2>Book Records</h2>
+                            <h2>Book Records</h2>
                             <div class="table-responsive mb-4 mt-4">
                                 <table class="multi-table table table-hover" style="width:100%">
                                     <thead>
@@ -65,31 +91,30 @@
                                     </thead>
                                     <tbody>
                                         <?php
-                                            $ret="SELECT * FROM  iBookStore_books"; 
-                                            $stmt= $mysqli->prepare($ret) ;
-                                            $stmt->execute();
-                                            $res=$stmt->get_result();
-                                            $cnt=1;
-                                            while($books=$res->fetch_object())
-                                            {
+                                        $ret = "SELECT * FROM  iBookStore_books";
+                                        $stmt = $mysqli->prepare($ret);
+                                        $stmt->execute();
+                                        $res = $stmt->get_result();
+                                        $cnt = 1;
+                                        while ($books = $res->fetch_object()) {
                                         ?>
                                             <tr>
-                                                <td><?php echo $books->b_title;?></td>
-                                                <td><?php echo $books->b_isbn;?></td>
-                                                <td><?php echo $books->cat_name;?></td>
-                                                <td><?php echo $books->b_author;?></td>
-                                                <td><?php echo $books->b_publisher;?></td>
-                                                <td><?php echo $books->b_count;?> Copies</td>
-                                                <td>Ksh <?php echo $books->b_price;?></td>
-                                                <td><span class="badge outline-badge-primary"><?php echo date("d M Y",strtotime($books->created_at));?></span></td>
+                                                <td><?php echo $books->b_title; ?></td>
+                                                <td><?php echo $books->b_isbn; ?></td>
+                                                <td><?php echo $books->cat_name; ?></td>
+                                                <td><?php echo $books->b_author; ?></td>
+                                                <td><?php echo $books->b_publisher; ?></td>
+                                                <td><?php echo $books->b_count; ?> Copies</td>
+                                                <td>Ksh <?php echo $books->b_price; ?></td>
+                                                <td><span class="badge outline-badge-primary"><?php echo date("d M Y", strtotime($books->created_at)); ?></span></td>
                                             </tr>
-                                        <?php }?>
+                                        <?php } ?>
                                     </tbody>
                                 </table>
                                 <hr>
                                 <table class="multi-table table table-striped table-bordered table-hover non-hover" style="width:100%">
                                     <thead>
-                                    <h2>Book Sales Records</h2>
+                                        <h2>Book Sales Records</h2>
                                         <tr>
                                             <th>Receipt Number</th>
                                             <th>Book ISBN</th>
@@ -101,23 +126,22 @@
                                     </thead>
                                     <tbody>
                                         <?php
-                                            $ret="SELECT * FROM  iBookStore_Sales"; 
-                                            $stmt= $mysqli->prepare($ret) ;
-                                            $stmt->execute();
-                                            $res=$stmt->get_result();
-                                            $cnt=1;
-                                            while($sales=$res->fetch_object())
-                                            {
+                                        $ret = "SELECT * FROM  iBookStore_Sales";
+                                        $stmt = $mysqli->prepare($ret);
+                                        $stmt->execute();
+                                        $res = $stmt->get_result();
+                                        $cnt = 1;
+                                        while ($sales = $res->fetch_object()) {
                                         ?>
                                             <tr>
-                                                <td><?php echo $sales->s_code;?></td>
-                                                <td><?php echo $sales->b_isbn;?></td>
-                                                <td><?php echo $sales->b_title;?></td>
-                                                <td>Ksh <?php echo $sales->s_amt;?></td>
-                                                <td><?php echo $sales->s_copies;?> Copies</td>
-                                                <td><span class="badge outline-badge-primary"><?php echo date("d M Y g:i",strtotime($sales->created_at));?></span></td>
+                                                <td><?php echo $sales->s_code; ?></td>
+                                                <td><?php echo $sales->b_isbn; ?></td>
+                                                <td><?php echo $sales->b_title; ?></td>
+                                                <td>Ksh <?php echo $sales->s_amt; ?></td>
+                                                <td><?php echo $sales->s_copies; ?> Copies</td>
+                                                <td><span class="badge outline-badge-primary"><?php echo date("d M Y g:i", strtotime($sales->created_at)); ?></span></td>
                                             </tr>
-                                        <?php }?>
+                                        <?php } ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -127,11 +151,12 @@
                 </div>
 
             </div>
-            <?php require_once('partials/_footer.php');?>
+            <?php require_once('partials/_footer.php'); ?>
         </div>
         <!--  END CONTENT AREA  -->
     </div>
     <!-- END MAIN CONTAINER -->
-    <?php require_once('partials/_scripts.php');?>
+    <?php require_once('partials/_scripts.php'); ?>
 </body>
+
 </html>

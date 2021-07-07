@@ -1,21 +1,47 @@
 <?php
-    session_start();
-    include('config/config.php');
-    include('config/checklogin.php');
-    check_login();
+/*
+ * Created on Wed Jul 07 2021
+ *
+ * The MIT License (MIT)
+ * Copyright (c) 2021 MartDevelopers Inc
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+ * and associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or substantial
+ * portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+ * TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 
-    require_once('partials/_head.php');
+session_start();
+include('config/config.php');
+include('config/checklogin.php');
+check_login();
+
+require_once('partials/_head.php');
 ?>
+
 <body>
-    
+
     <!--  BEGIN NAVBAR  -->
-    <?php require_once('partials/_staffNav.php');?>
+    <?php require_once('partials/_staffNav.php'); ?>
     <!--  END NAVBAR  -->
 
     <!--  BEGIN NAVBAR  -->
     <div class="sub-header-container">
         <header class="header navbar navbar-expand-sm">
-            <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></a>
+            <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg></a>
             <ul class="navbar-nav flex-row">
                 <li>
                     <div class="page-header">
@@ -39,15 +65,15 @@
         <div class="search-overlay"></div>
 
         <!--  BEGIN SIDEBAR  -->
-        <?php require_once('partials/_staffSideNav.php');?>
+        <?php require_once('partials/_staffSideNav.php'); ?>
         <!--  END SIDEBAR  -->
 
         <!--  BEGIN CONTENT AREA  -->
         <div id="content" class="main-content">
             <div class="layout-px-spacing">
-                
+
                 <div class="row layout-top-spacing">
-                
+
                     <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
                         <div class="widget-content widget-content-area br-6">
                             <div class="table-responsive mb-4 mt-4">
@@ -62,27 +88,34 @@
                                     </thead>
                                     <tbody>
                                         <?php
-                                            $ret="SELECT * FROM  iBookStore_book_categories"; 
-                                            $stmt= $mysqli->prepare($ret) ;
-                                            $stmt->execute();
-                                            $res=$stmt->get_result();
-                                            $cnt=1;
-                                            while($categories=$res->fetch_object())
-                                            {
+                                        $ret = "SELECT * FROM  iBookStore_book_categories";
+                                        $stmt = $mysqli->prepare($ret);
+                                        $stmt->execute();
+                                        $res = $stmt->get_result();
+                                        $cnt = 1;
+                                        while ($categories = $res->fetch_object()) {
                                         ?>
                                             <tr>
-                                                <td><?php echo $categories->cat_name;?></td>
-                                                <td><?php echo $categories->cat_number;?></td>
-                                                <td><?php echo date("d M Y - g:i",strtotime($categories->created_at));?></td>
+                                                <td><?php echo $categories->cat_name; ?></td>
+                                                <td><?php echo $categories->cat_number; ?></td>
+                                                <td><?php echo date("d M Y - g:i", strtotime($categories->created_at)); ?></td>
                                                 <td>
-                                                    <a href='pages_staff_add_book_record.php?cat_id=<?php echo $categories->cat_id;?>&cat_name=<?php echo $categories->cat_name;?>' class='badge outline-badge-success bs-tooltip' data-toggle='tooltip' data-placement='top' data-original-title='Add New Book'>
+                                                    <a href='pages_staff_add_book_record.php?cat_id=<?php echo $categories->cat_id; ?>&cat_name=<?php echo $categories->cat_name; ?>' class='badge outline-badge-success bs-tooltip' data-toggle='tooltip' data-placement='top' data-original-title='Add New Book'>
                                                         Add Book
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg> 
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg> 
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity">
+                                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                                            <polyline points="14 2 14 8 20 8"></polyline>
+                                                            <line x1="12" y1="18" x2="12" y2="12"></line>
+                                                            <line x1="9" y1="15" x2="15" y2="15"></line>
+                                                        </svg>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity">
+                                                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                                                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                                                        </svg>
                                                     </a>
                                                 </td>
                                             </tr>
-                                        <?php }?>
+                                        <?php } ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -92,11 +125,11 @@
                 </div>
 
             </div>
-            <?php require_once('partials/_footer.php');?>
+            <?php require_once('partials/_footer.php'); ?>
         </div>
         <!--  END CONTENT AREA  -->
     </div>
-    <?php require_once('partials/_scripts.php');?>
+    <?php require_once('partials/_scripts.php'); ?>
 
 
-</html>
+    </html>
